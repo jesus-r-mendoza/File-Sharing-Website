@@ -1,0 +1,4 @@
+*
+!.gitignore
+!WEB-INF/
+!WEB-INF/**
