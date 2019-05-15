@@ -8,5 +8,5 @@
 !src/cloud_final/
 !src/cloud_final/**
 
-!WebContent/WEB-INF/cloud_final/views/
-!WebContent/WEB-INF/cloud_final/views/**
+!WebContent/WEB-INF/cloud_final/
+!WebContent/WEB-INF/cloud_final/**
