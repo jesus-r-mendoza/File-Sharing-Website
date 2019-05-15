@@ -3,10 +3,10 @@
 
 # Except for these folders / files
 
-!.gitignore
+!*.gitignore
 
-!src/cloud_final/
-!src/cloud_final/**
+!src/
+!src/**
 
-!WebContent/WEB-INF/cloud_final/
-!WebContent/WEB-INF/cloud_final/**
+!WebContent/
+!WebContent/**
