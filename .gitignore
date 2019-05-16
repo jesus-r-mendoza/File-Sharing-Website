@@ -10,3 +10,6 @@
 
 !WebContent/
 !WebContent/**
+
+!sql/
+!sql/**
