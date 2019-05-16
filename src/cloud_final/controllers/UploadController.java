@@ -21,7 +21,9 @@ public class UploadController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		File repository = (File) this.getServletConfig().getServletContext().getAttribute("javax.servlet.context.tempdir");
-		String uploadDirectory = this.getServletContext().getRealPath("/WEB-INF/uploads");		
+		
+		String uploadDirectory = this.getServletContext().getRealPath("/WEB-INF/uploads"); // don't forget to create this folder
+		                                                                                   // it's not automatically created
 		
 		FileUploader uploader = new FileUploader(repository, uploadDirectory);		
 		int filesUploaded = uploader.parseRequest(request);
