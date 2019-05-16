@@ -28,9 +28,9 @@ public class FileUploader {
 			for ( FileItem item : items ) {
 				if( !item.isFormField() ) {
 					String fileName = (new File( item.getName() )).getName();
-                    File file = new File( uploadDir, fileName );
-                    item.write(file);
-                    count++;
+					File file = new File( uploadDir, fileName );
+					item.write(file);
+					count++;
 				}
 			}			
 		} catch ( Exception e ) {  return -1;  }
