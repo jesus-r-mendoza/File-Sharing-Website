@@ -10,6 +10,18 @@
 	<div class="container">
 		Success!
 		<a href="LoginController">Sign out</a>	
+
+		<div>
+		
+			<h4>Upload a file: </h4>
+			<form action="Upload" method="post" enctype="multipart/form-data">
+				File: <input type="file" name="file" /> <br>
+				<input type="submit" name="upload" value="Upload" />
+			</form>
+		
+		
+		</div>
+		
 	</div>
 
 </body>
