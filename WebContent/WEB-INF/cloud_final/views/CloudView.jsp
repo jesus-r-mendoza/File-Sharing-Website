@@ -10,18 +10,22 @@
 </head>
 <body>
 	<div class="container"> 
-		Success!
-		<a href="LoginController">Sign out</a>	
+	
+		<div class="jumbotron">
+			<h1 class="display-3">Welcome to your Cloud</h1>
+		</div>
+		
+		<div class="d-flex justify-content-between">
+			<h3>These are your stored files:</h3>
+			<a href="LoginController">Sign Out</a>
+		</div>
 		
 		<div>
-		
 			<h4>Upload a file: </h4>
 			<form action="Upload" method="post" enctype="multipart/form-data">
 				File: <input type="file" name="file" /> <br>
 				<input type="submit" name="upload" value="Upload" />
 			</form>
-		
-		
 		</div>
 		
 	</div>
