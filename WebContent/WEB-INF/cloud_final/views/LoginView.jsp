@@ -26,5 +26,9 @@
 		Don't have an account? Register <a href="RegisterController">here.</a>
 	</div>
 	
+	<div class="container">
+		<div style="color: #FF0000;">${loginErrorMessage}</div>
+	</div>
+	
 </body>
 </html>
