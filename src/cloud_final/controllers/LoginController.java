@@ -36,6 +36,10 @@ public class LoginController extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+    	if(user != null) {
+    		request.getSession().removeAttribute("user");
+    	}
 		request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
 	}
 
@@ -70,6 +74,7 @@ public class LoginController extends HttpServlet {
    		 	}
     		else
     		{
+    			request.setAttribute("loginErrorMessage", "Username/Password Invalid. Try again.");
     			request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
     		}
     		

@@ -21,4 +21,9 @@
 			<input type="submit" name="register" value="register">
 		</form>
 	</div>
+	
+	<div class="container">
+		<div style="color: #FF0000;">${registerErrorMessage}</div>
+	</div>
+	
 </body>
