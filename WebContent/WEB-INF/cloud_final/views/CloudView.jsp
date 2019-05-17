@@ -7,10 +7,10 @@
 <title>Home Page</title>
 </head>
 <body>
-	<div class="container"> 
+	<div class="container">
 		Success!
 		<a href="LoginController">Sign out</a>	
-		
+
 		<div>
 		
 			<h4>Upload a file: </h4>
