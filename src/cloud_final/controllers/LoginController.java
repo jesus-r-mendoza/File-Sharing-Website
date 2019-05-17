@@ -8,11 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import cloud_final.models.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
@@ -37,35 +40,39 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// User info
-		String userName = request.getParameter("userName");
-		String userPassword = request.getParameter("userPassword");
-		String user_id= null;
+		String userName = request.getParameter("loginName");
+		String userPassword = request.getParameter("loginPassword");
+		int user_id;
 
 		Connection c = null;
-        try
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try
         {
             String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78";
             String sqlUsername = "cs3220stu78";
             String sqlPassword = "HhEABpU*";
 
             c = DriverManager.getConnection( url, sqlUsername, sqlPassword );
-            Statement stmt = c.createStatement();
+            pst = c.prepareStatement("SELECT user_id FROM users where username=? and password=?");
+            pst.setString(1, userName);
+            pst.setString(2, userPassword);
             
-            String sql = "SELECT user_id FROM users where username='"+userName+"' and password='"+userPassword+"'";
-    		ResultSet rs = stmt.executeQuery(sql);
-         
+            rs = pst.executeQuery();
+            
     		if(rs.next())
    		 	{
-		   		user_id = rs.getString("user_Id");   
-
-	    		request.getSession().setAttribute("user_id", user_id);
-	    		request.getRequestDispatcher("/WEB-INF/cloud_final/views/CloudView.jsp").forward(request, response);
-	   		}
+		   		user_id = rs.getInt("user_id");   
+		   		User user = new User(user_id,userName);
+		   		
+	    		request.getSession().setAttribute("user", user);
+	    		request.getRequestDispatcher("CloudController").forward(request, response);
+   		 	}
     		else
     		{
     			request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
     		}
+    		
         }
         catch( SQLException e )
         {
@@ -73,14 +80,30 @@ public class LoginController extends HttpServlet {
         }
         finally
         {
-            try
-            {
-                if( c != null ) c.close();
-            }
-            catch( SQLException e )
-            {
-                throw new ServletException( e );
-            }
+        	try
+	        {
+	            if( rs != null ) rs.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
+		    try
+	        {
+	            if( pst != null ) pst.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
+	        try
+	        {
+	            if( c != null ) c.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
         }
 	}
 

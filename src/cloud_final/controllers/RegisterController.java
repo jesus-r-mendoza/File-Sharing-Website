@@ -13,7 +13,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 @WebServlet("/RegisterController")
 public class RegisterController extends HttpServlet {
@@ -38,21 +37,16 @@ public class RegisterController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// process register data
-		// check if valid and make account
-		// login automatically? or have them log in again if valid
-		// if not valid, send back to register view telling them whats wrong
-		
 		// User info
 		String registerName = request.getParameter("registerName");
 		String registerPassword = request.getParameter("registerPassword");
-		// String user_id= null;
-
 		registerName = registerName.trim();
 		registerPassword = registerPassword.trim();
 		
 		// Connect to database
 		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
         try
         {
             String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78";
@@ -60,31 +54,27 @@ public class RegisterController extends HttpServlet {
             String password = "HhEABpU*";
 
             c = DriverManager.getConnection( url, username, password );
-            Statement stmt = c.createStatement();
             
-            String sql = "SELECT user_id FROM users where username='"+registerName;
-    		ResultSet rs = stmt.executeQuery(sql);
-    		
-    		if(rs.next())
+            pst = c.prepareStatement("SELECT user_id FROM users where username=?");
+            pst.setString(1, registerName);
+    		rs = pst.executeQuery();
+		
+			if(rs.next())
     		{
     			// return username used
         		
     		}
     		else
     		{
-    			String stmtQuery = "INSERT INTO users (username,password) VALUES(NULL,?,?);";
-	            PreparedStatement pstmt = c.prepareStatement(stmtQuery);
+	            PreparedStatement pstmt = c.prepareStatement("INSERT INTO users (username,password) VALUES(?,?)");
 	            pstmt.setString(1,registerName.toLowerCase());
 	            pstmt.setString(2,registerPassword);
 	            pstmt.executeUpdate();
 	            
-	            c.close();
-    			request.getSession().setAttribute("username", registerName);
-    			request.getSession().setAttribute("password", registerPassword);
-    			response.sendRedirect("LoginController");
-    			return;
-    		}
-            
+    			request.getSession().setAttribute("loginName", registerName);
+    			request.getSession().setAttribute("loginPassword", registerPassword);
+    			request.getRequestDispatcher("LoginController").forward(request, response);	
+    		}    
         }
         catch( SQLException e )
         {
@@ -92,19 +82,33 @@ public class RegisterController extends HttpServlet {
         }
         finally
         {
-            try
-            {
-                if( c != null ) c.close();
-            }
-            catch( SQLException e )
-            {
-                throw new ServletException( e );
-            }
+		    try
+	        {
+	            if( rs != null ) rs.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
+		    try
+	        {
+	            if( pst != null ) pst.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
+	        try
+	        {
+	            if( c != null ) c.close();
+	        }
+	        catch( SQLException e )
+	        {
+	            throw new ServletException( e );
+	        }
         }
 		
-		
-		
-		doGet(request, response);
+        doGet(request, response);
 	}
 
 }

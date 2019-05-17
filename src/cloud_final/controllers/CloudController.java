@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cloud_final.models.User;
+
 @WebServlet("/CloudController")
 public class CloudController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -16,8 +18,12 @@ public class CloudController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	// check for session and user bean
-    	request.getRequestDispatcher("/WEB-INF/cloud_final/views/CloudView.jsp").forward(request, response);
+    	User user = (User) request.getSession().getAttribute("user");
+    	if(user == null) {
+    		request.getRequestDispatcher("LoginController").forward(request, response);
+    	}
+    	else
+    		request.getRequestDispatcher("/WEB-INF/cloud_final/views/CloudView.jsp").forward(request, response);
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
