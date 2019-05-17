@@ -16,6 +16,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.security.MessageDigest;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
@@ -38,16 +39,48 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
     	if(user != null) {
-    		request.getSession().removeAttribute("user");
+    		request.getSession().invalidate();
     	}
 		request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userName = request.getParameter("loginName");
-		String userPassword = request.getParameter("loginPassword");
+		String salt = "Acervan#1";
+		String loginName = request.getParameter("loginName");
+		String loginPassword = request.getParameter("loginPassword");
 		int user_id;
 
+		loginName = loginName.trim();
+		loginPassword = loginPassword.trim();
+		loginPassword = loginPassword + salt;
+		
+		byte[] plainText = loginPassword.getBytes();
+		StringBuilder sb = new StringBuilder();
+		
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+
+            md.reset();
+            md.update(plainText);
+            byte[] encodedPassword = md.digest();
+
+            
+            for (int i = 0; i < encodedPassword.length; i++) {
+                if ((encodedPassword[i] & 0xff) < 0x10) {
+                    sb.append("0");
+                }
+
+                sb.append(Long.toString(encodedPassword[i] & 0xff, 16));
+            }
+
+            loginPassword = sb.toString();
+            System.out.println("Plain    : " + loginPassword);
+            System.out.println("Encrypted: " + sb.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        loginPassword = sb.toString();
+		
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -59,18 +92,20 @@ public class LoginController extends HttpServlet {
 
             c = DriverManager.getConnection( url, sqlUsername, sqlPassword );
             pst = c.prepareStatement("SELECT user_id FROM users where username=? and password=?");
-            pst.setString(1, userName);
-            pst.setString(2, userPassword);
+            pst.setString(1, loginName);
+            pst.setString(2, loginPassword);
             
             rs = pst.executeQuery();
             
     		if(rs.next())
    		 	{
 		   		user_id = rs.getInt("user_id");   
-		   		User user = new User(user_id,userName);
+		   		User user = new User(user_id,loginName);
 		   		
 	    		request.getSession().setAttribute("user", user);
-	    		request.getRequestDispatcher("CloudController").forward(request, response);
+	    		response.sendRedirect("CloudController");
+	    		return;
+	    		// request.getRequestDispatcher("CloudController").forward(request, response);
    		 	}
     		else
     		{
