@@ -16,14 +16,18 @@
 <body>
 	<div class="container">
 	<form action="LoginController" method="post">
-		Username: <input type="text" name="username"><br>
-		Password: <input type="password" name="password"><br>
+		Username: <input type="text" name="loginName"><br>
+		Password: <input type="password" name="loginPassword"><br>
 		<input type="submit" name="login" value="login"><br>
 	</form>
 	</div>
 	
 	<div class="container">
 		Don't have an account? Register <a href="RegisterController">here.</a>
+	</div>
+	
+	<div class="container">
+		<div style="color: #FF0000;">${loginErrorMessage}</div>
 	</div>
 	
 </body>

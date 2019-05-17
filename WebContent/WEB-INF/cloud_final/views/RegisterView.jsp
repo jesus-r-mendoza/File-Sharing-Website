@@ -16,10 +16,14 @@
 <body>
 	<div class="container">
 		<form action="RegisterController" method="post">
-			email: <input type="text"><br>
-			username: <input type="text"><br>
-			password: <input type="text"><br>
+			username: <input type="text" name="registerName"><br>
+			password: <input type="text" name="registerPassword"><br>
 			<input type="submit" name="register" value="register">
 		</form>
 	</div>
+	
+	<div class="container">
+		<div style="color: #FF0000;">${registerErrorMessage}</div>
+	</div>
+	
 </body>
