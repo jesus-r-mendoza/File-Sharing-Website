@@ -62,7 +62,7 @@ public class RegisterController extends HttpServlet {
 			if(rs.next())
     		{
     			// return username used
-        		
+        		request.getSession().setAttribute("registerErrorMessage", "Username already in use. Try another");
     		}
     		else
     		{
@@ -108,7 +108,6 @@ public class RegisterController extends HttpServlet {
 	        }
         }
 		
-        doGet(request, response);
 	}
 
 }
