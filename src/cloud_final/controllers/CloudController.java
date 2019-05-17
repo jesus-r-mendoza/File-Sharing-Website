@@ -54,7 +54,7 @@ public class CloudController extends HttpServlet {
 			String sql = "select * from files where user_id = ?";
 			
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			pstmt.setString(1, u.getUser_id());
+			pstmt.setInt(1, u.getUser_id());
 			
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -67,10 +67,20 @@ public class CloudController extends HttpServlet {
 			}
 			
 		} catch ( SQLException e ) {
-			if (c != null) c.close();
+			if (c != null)
+				try {
+					c.close();
+				} catch (SQLException e1) {
+					return null;
+				}
 			return null;
 		} finally {
-			if (c != null) c.close();
+			if (c != null)
+				try {
+					c.close();
+				} catch (SQLException e) {
+					return null;
+				}
 		}
 		return files;
 	}
