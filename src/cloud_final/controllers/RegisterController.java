@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.security.MessageDigest;
 
 @WebServlet("/RegisterController")
 public class RegisterController extends HttpServlet {
@@ -38,10 +39,38 @@ public class RegisterController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// User info
+		String salt = "Acervan#1";
 		String registerName = request.getParameter("registerName");
 		String registerPassword = request.getParameter("registerPassword");
 		registerName = registerName.trim();
 		registerPassword = registerPassword.trim();
+		registerPassword = registerPassword + salt;
+		
+		byte[] plainText = registerPassword.getBytes();
+		StringBuilder sb = new StringBuilder();
+		
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+
+            md.reset();
+            md.update(plainText);
+            byte[] encodedPassword = md.digest();
+
+            
+            for (int i = 0; i < encodedPassword.length; i++) {
+                if ((encodedPassword[i] & 0xff) < 0x10) {
+                    sb.append("0");
+                }
+
+                sb.append(Long.toString(encodedPassword[i] & 0xff, 16));
+            }
+
+            registerPassword = sb.toString();
+            System.out.println("Plain    : " + registerPassword);
+            System.out.println("Encrypted: " + sb.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 		// Connect to database
 		Connection c = null;
@@ -61,8 +90,7 @@ public class RegisterController extends HttpServlet {
 		
 			if(rs.next())
     		{
-    			// return username used
-        		request.getSession().setAttribute("registerErrorMessage", "Username already in use. Try another");
+    			request.getSession().setAttribute("registerErrorMessage", "Username already in use. Try another");
     		}
     		else
     		{
@@ -73,7 +101,9 @@ public class RegisterController extends HttpServlet {
 	            
     			request.getSession().setAttribute("loginName", registerName);
     			request.getSession().setAttribute("loginPassword", registerPassword);
-    			request.getRequestDispatcher("LoginController").forward(request, response);	
+    			response.sendRedirect("LoginController");
+    			return;
+    			// request.getRequestDispatcher("LoginController").forward(request, response);	
     		}    
         }
         catch( SQLException e )
