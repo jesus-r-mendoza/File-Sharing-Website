@@ -38,7 +38,8 @@
 			<div class="d-flex justify-content-between">
 				<h5>${f.file.name}</h5>
 				<div class="d-flex justify-content-around">
-					<a class="mr-1" href="RenameFilesController?userId=${user.user_id}&fileId=${f.id}">Rename</a>
+					<a class="mr-1" href="download?fileId=${f.id}">Download</a>
+					<a class="ml-1 mr-1" href="RenameFilesController?userId=${user.user_id}&fileId=${f.id}">Rename</a>
 					<a class="ml-1" href="FileDeleteController?fileId=${f.id}">Delete</a>
 				</div>
 			</div>
