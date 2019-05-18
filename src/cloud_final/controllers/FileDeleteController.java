@@ -38,8 +38,8 @@ public class FileDeleteController extends HttpServlet {
 		
 		ArrayList<FileBean> files = (ArrayList<FileBean>) request.getSession().getAttribute("files");
 	
-		String userName ="cs3220stu73";
-		String password ="kFy*#YZm";
+		String userName ="cs3220stu78";
+		String password ="fRINU1iD";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
 		
