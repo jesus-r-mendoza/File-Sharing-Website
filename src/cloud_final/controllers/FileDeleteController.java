@@ -40,7 +40,7 @@ public class FileDeleteController extends HttpServlet {
 	
 		String userName ="cs3220stu73";
 		String password ="kFy*#YZm";
-		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu73" ;
+		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
 		
 		
@@ -61,7 +61,8 @@ public class FileDeleteController extends HttpServlet {
 			
 			
 			pstmt.executeUpdate();
-			
+			response.sendRedirect("CloudController");
+			return;
 //			fb.getFile().renameTo(new File(fb.getPath() + fileRename));
 //			
 			
