@@ -36,12 +36,11 @@ public class UploadController extends HttpServlet {
 		
 		User user = (User) request.getSession().getAttribute("user");
 		
-		if ( user == null )
-			return;
+		if ( user == null ) return;
 		
 		FileUploader uploader = new FileUploader(repository, uploadDirectory);		
 		String fileName = uploader.parseRequest(request);
-		System.out.println("fileName == null ? : " + (fileName == null));
+		
 		if ( fileName != null ) {
 			Connection c = null;
 			try {
