@@ -1,5 +1,6 @@
 package cloud_final.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,6 +46,8 @@ public class FileDeleteController extends HttpServlet {
 		
 		
 		try {
+			FileBean fb = getFileById(files,fileId);
+			if(fb==null) return;
 			c= DriverManager.getConnection(url,userName,password);
 			
 			System.out.println("connected");
@@ -59,7 +62,15 @@ public class FileDeleteController extends HttpServlet {
 
 			pstmt.setInt(1,fileId );	
 			
+			int res = pstmt.executeUpdate();
 			
+			if (res ==1) {
+				fb.getFile().delete();
+				
+			}
+			else {
+				request.setAttribute("FileDeleteErrorMessage", "File could not be deleted. Try again.");
+			}
 			pstmt.executeUpdate();
 			response.sendRedirect("CloudController");
 			return;
@@ -72,6 +83,14 @@ public class FileDeleteController extends HttpServlet {
 			e.printStackTrace();
 		}
 	
+	}
+	private FileBean getFileById(ArrayList<FileBean> list,int id) {
+		for(FileBean fb: list) {
+			if(fb.getId()==id) {
+				return fb;
+			}
+		}
+		return null;
 	}
 
 	

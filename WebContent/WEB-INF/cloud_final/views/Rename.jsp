@@ -13,7 +13,7 @@
 	<form action = "RenameFilesController" method = "post">
 			<div class="form-group">
 				<label for="">Enter the new name for your file :</label>
-				<textarea name="fileRename"></textarea>
+				<input type="text" name="fileRename"/><span>${extension}</span>
 			</div>
 			<input type = "hidden" name="userId" value= "${param.userId}"/>
 			<input type = "hidden" name="fileId" value= "${param.fileId}"/>

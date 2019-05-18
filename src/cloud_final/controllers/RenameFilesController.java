@@ -39,12 +39,13 @@ public class RenameFilesController extends HttpServlet {
 		
 		ArrayList<FileBean> files = (ArrayList<FileBean>) request.getSession().getAttribute("files");
 		
-//		FileBean fb = getFileById(files,fileId);
-//		
-//		String fileName = fb.getFile().getName();
-//		
-//		System.out.println(fileName);
-//		
+		FileBean fb = getFileById(files,fileId);
+		
+		String fileName = fb.getFile().getName();
+		
+		String extension = getExt(fileName);
+		System.out.println(extension);
+		request.getSession().setAttribute("extension", extension);
 		request.getRequestDispatcher("/WEB-INF/cloud_final/views/Rename.jsp").forward(request,response);
 		
 		
@@ -64,11 +65,14 @@ public class RenameFilesController extends HttpServlet {
 		ArrayList<FileBean> files = (ArrayList<FileBean>) request.getSession().getAttribute("files");
 		
 		String fileRename = request.getParameter("fileRename");
+		String exten = (String) request.getSession().getAttribute("extension");
+		System.out.print(exten);
+		String fullFile = fileRename + exten;
 		String userName ="cs3220stu78";
 		String password ="HhEABpU*";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
-		if(fileRename==null || fileRename.trim().length() ==0) {
+		if(fullFile==null || fullFile.trim().length() ==0) {
 			request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
 			response.sendRedirect("CloudController");
 			return;
@@ -78,27 +82,36 @@ public class RenameFilesController extends HttpServlet {
 		try {
 			c= DriverManager.getConnection(url,userName,password);
 		
-//			FileBean fb = getFileById(files,fileId);
-//			if(fb==null) return;
-//			
+			FileBean fb = getFileById(files,fileId);
+			if(fb==null) return;
+			
 			//sql query 
 			String sql = "UPDATE files SET file_name = ? WHERE user_id = ? AND file_id=?";
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			
 			
-			pstmt.setString(1, fileRename);
+			pstmt.setString(1, fullFile);
 			
-			pstmt.setInt(2, 1);
+			pstmt.setInt(2, user.getUser_id());
 			
-//			pstmt.setInt(3, fb.getId() );
-			pstmt.setInt(3,fileId );	
+			pstmt.setInt(3, fb.getId() );
 			
 			
-			pstmt.executeUpdate();
-			response.sendRedirect("CloudController");
-			return;
-//			fb.getFile().renameTo(new File(fb.getPath() + fileRename));
-//			
+			
+			int res = pstmt.executeUpdate();
+			
+			if (res ==1) {
+				File f = new File(fb.getPath(),fullFile);
+//				System.out.println(f.getAbsolutePath());
+//				System.out.println(fb.getFile().getAbsolutePath());
+				fb.getFile().renameTo(f);
+				
+			}
+			else {
+				request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
+			}
+			
+			
 			
 			
 		} catch (SQLException e) {
@@ -106,8 +119,9 @@ public class RenameFilesController extends HttpServlet {
 			e.printStackTrace();
 		}
 				
+		response.sendRedirect("CloudController");
 		
-		doGet(request, response);
+		
 		
 	}
 	
