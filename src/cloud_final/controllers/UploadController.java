@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import cloud_final.models.FileUploader;
 import cloud_final.models.User;
 
-@WebServlet("/Upload")
+@WebServlet("/upload")
 public class UploadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("CloudController");
+		response.sendRedirect("home");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

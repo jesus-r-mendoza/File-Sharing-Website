@@ -26,7 +26,7 @@
 		
 		<div>
 			<h4>Upload a file: </h4>
-			<form action="Upload" method="post" enctype="multipart/form-data">
+			<form action="upload" method="post" enctype="multipart/form-data">
 				File: <input type="file" name="file" /> <br>
 				<input type="submit" name="upload" value="Upload" />
 			</form>
