@@ -31,7 +31,6 @@ public class FileDeleteController extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print("Entered do get");
 		
 		Integer fileId = Integer.valueOf( request.getParameter( "fileId" ) );
 		
@@ -57,12 +56,11 @@ public class FileDeleteController extends HttpServlet {
 			PreparedStatement pstmt = c.prepareStatement(sql);
 			
 			
-//			pstmt.setInt(3, fb.getId() );
+
 			pstmt.setInt(1,fileId );	
-			System.out.println("FilesId");
 			
-			int result = pstmt.executeUpdate();
-			System.out.print(result);
+			
+			pstmt.executeUpdate();
 			
 //			fb.getFile().renameTo(new File(fb.getPath() + fileRename));
 //			

@@ -54,7 +54,7 @@ public class RenameFilesController extends HttpServlet {
 	java.sql.Connection c= null;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.print("Entered do post");
+
 		
 		Integer fileId = Integer.valueOf( request.getParameter( "fileId" ) );
 		Integer userId = Integer.valueOf( request.getParameter( "userId" ) );
@@ -77,8 +77,7 @@ public class RenameFilesController extends HttpServlet {
 		
 		try {
 			c= DriverManager.getConnection(url,userName,password);
-			
-			System.out.println("connected");
+		
 //			FileBean fb = getFileById(files,fileId);
 //			if(fb==null) return;
 //			
@@ -88,15 +87,15 @@ public class RenameFilesController extends HttpServlet {
 			
 			
 			pstmt.setString(1, fileRename);
-			System.out.println("rename");
+			
 			pstmt.setInt(2, 1);
-			System.out.println("id");
+			
 //			pstmt.setInt(3, fb.getId() );
 			pstmt.setInt(3,fileId );	
-			System.out.println("FilesId");
 			
-			int result = pstmt.executeUpdate();
-			System.out.print(result);
+			
+			pstmt.executeUpdate();
+			response.sendRedirect("CloudController");
 			
 //			fb.getFile().renameTo(new File(fb.getPath() + fileRename));
 //			
@@ -123,7 +122,7 @@ public class RenameFilesController extends HttpServlet {
 		for(int i=fileName.length()-1; i>=0;i--) {
 			extension = fileName.charAt(i)+ extension;
 			if(fileName.charAt(i) =='.') {
-				System.out.println(extension);
+				
 				return extension;
 			}
 		}
