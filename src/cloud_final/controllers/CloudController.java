@@ -70,20 +70,22 @@ public class CloudController extends HttpServlet {
 			}
 			
 		} catch ( SQLException e ) {
-			if (c != null)
+			if (c != null) {
 				try {
 					c.close();
 				} catch (SQLException e1) {
 					return null;
 				}
+			}
 			return null;
 		} finally {
-			if (c != null)
+			if (c != null) {
 				try {
 					c.close();
 				} catch (SQLException e) {
 					return null;
 				}
+			}
 		}
 		return files;
 	}
