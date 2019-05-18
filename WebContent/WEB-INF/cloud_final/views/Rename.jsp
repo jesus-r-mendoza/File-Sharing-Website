@@ -19,7 +19,6 @@
 			<input type = "hidden" name="fileId" value= "${param.fileId}"/>
 			<input type="submit" class="btn btn-primary" name="submit" value="SUBMIT" />
 			
-			
 	</form>
 </body>
 </html>

@@ -31,7 +31,7 @@ public class RenameFilesController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getExt("test.jpg");
+//		getExt("test.jpg");
 
 		System.out.print("Entered do get");
 		Integer fileId = Integer.valueOf( request.getParameter( "fileId" ) );
@@ -39,11 +39,12 @@ public class RenameFilesController extends HttpServlet {
 		
 		ArrayList<FileBean> files = (ArrayList<FileBean>) request.getSession().getAttribute("files");
 		
-		FileBean fb = getFileById(files,fileId);
-		
-		String fileName = fb.getFile().getName();
-		
-		System.out.println(fileName);
+//		FileBean fb = getFileById(files,fileId);
+//		
+//		String fileName = fb.getFile().getName();
+//		
+//		System.out.println(fileName);
+//		
 		request.getRequestDispatcher("/WEB-INF/cloud_final/views/Rename.jsp").forward(request,response);
 		
 		
@@ -67,7 +68,10 @@ public class RenameFilesController extends HttpServlet {
 		String password ="kFy*#YZm";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu73" ;
 		
-		if(fileRename==null) {
+		if(fileRename==null || fileRename.trim().length() ==0) {
+			request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
+			response.sendRedirect("CloudController");
+			return;
 			
 		}
 		
