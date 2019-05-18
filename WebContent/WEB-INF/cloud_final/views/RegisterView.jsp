@@ -17,7 +17,7 @@
 	<div class="container">
 		<form action="RegisterController" method="post">
 			username: <input type="text" name="registerName"><br>
-			password: <input type="text" name="registerPassword"><br>
+			password: <input type="password" name="registerPassword"><br>
 			<input type="submit" name="register" value="register">
 		</form>
 	</div>

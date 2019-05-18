@@ -16,11 +16,17 @@
 <body>
 	<div class="container">
 	<form action="LoginController" method="post">
-		Username: <input type="text" name="loginName"><br>
-		Password: <input type="password" name="loginPassword"><br>
+		username: <input type="text" name="loginName"><br>
+		password: <input type="password" name="loginPassword"><br>
 		<input type="submit" name="login" value="login"><br>
 	</form>
 	</div>
+	<div class="container">
+		<c:if test="${registered == 'yes'}">
+			<p>The user ${loginName} is registered!</p>
+		</c:if>
+	</div>
+	
 	
 	<div class="container">
 		Don't have an account? Register <a href="RegisterController">here.</a>

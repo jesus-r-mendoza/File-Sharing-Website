@@ -66,8 +66,8 @@ public class RegisterController extends HttpServlet {
             }
 
             registerPassword = sb.toString();
-            System.out.println("Plain    : " + registerPassword);
-            System.out.println("Encrypted: " + sb.toString());
+            // System.out.println("Plain    : " + registerPassword);
+            // System.out.println("Encrypted: " + sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class RegisterController extends HttpServlet {
 		
 			if(rs.next())
     		{
-    			request.getSession().setAttribute("registerErrorMessage", "Username already in use. Try another");
+    			request.getSession().setAttribute("registerErrorMessage", "Username already in use. Try another.");
     		}
     		else
     		{
@@ -100,7 +100,8 @@ public class RegisterController extends HttpServlet {
 	            pstmt.executeUpdate();
 	            
     			request.getSession().setAttribute("loginName", registerName);
-    			request.getSession().setAttribute("loginPassword", registerPassword);
+    			// request.getSession().setAttribute("loginPassword", registerPassword);
+    			request.getSession().setAttribute("registered", "yes");
     			response.sendRedirect("LoginController");
     			return;
     			// request.getRequestDispatcher("LoginController").forward(request, response);	

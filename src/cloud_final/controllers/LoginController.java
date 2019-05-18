@@ -41,15 +41,19 @@ public class LoginController extends HttpServlet {
     	if(user != null) {
     		request.getSession().invalidate();
     	}
+		request.removeAttribute("loginErrorMessage");
 		request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().removeAttribute("registered");
+		request.removeAttribute("loginErrorMessage");
+		
 		String salt = "Acervan#1";
 		String loginName = request.getParameter("loginName");
 		String loginPassword = request.getParameter("loginPassword");
 		int user_id;
-
+		
 		loginName = loginName.trim();
 		loginPassword = loginPassword.trim();
 		loginPassword = loginPassword + salt;
@@ -74,8 +78,8 @@ public class LoginController extends HttpServlet {
             }
 
             loginPassword = sb.toString();
-            System.out.println("Plain    : " + loginPassword);
-            System.out.println("Encrypted: " + sb.toString());
+            // System.out.println("Plain    : " + loginPassword);
+            // System.out.println("Encrypted: " + sb.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,15 +105,18 @@ public class LoginController extends HttpServlet {
    		 	{
 		   		user_id = rs.getInt("user_id");   
 		   		User user = new User(user_id,loginName);
-		   		
 	    		request.getSession().setAttribute("user", user);
 	    		response.sendRedirect("CloudController");
+
 	    		return;
 	    		// request.getRequestDispatcher("CloudController").forward(request, response);
    		 	}
     		else
     		{
-    			request.setAttribute("loginErrorMessage", "Username/Password Invalid. Try again.");
+    			if(loginName.length() == 0)
+    				request.setAttribute("loginErrorMessage", "No username detected");
+    			else
+    				request.setAttribute("loginErrorMessage", "Username/Password Invalid. Try again.");
     			request.getRequestDispatcher("/WEB-INF/cloud_final/views/LoginView.jsp").forward(request, response);
     		}
     		
