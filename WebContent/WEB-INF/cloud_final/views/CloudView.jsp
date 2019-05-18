@@ -34,10 +34,15 @@
 		
 		
 		<c:forEach items="${files}" var="f">
-			<h5>${f.file.name}</h5>
-			<h5>${f.path}</h5>
-			<h5>${f.id}</h5>
 			<hr>
+			<div class="d-flex justify-content-between">
+				<h5>${f.file.name}</h5>
+				<div class="d-flex justify-content-around">
+					<a class="mr-1" href="RenameFilesController?userId=${user.user_id}&fileId=${f.id}">Rename</a>
+					<a class="ml-1" href="FileDeleteController?fileId=${f.id}">Delete</a>
+				</div>
+			</div>
+			
 		</c:forEach>
 		
 	</div>

@@ -65,7 +65,7 @@ public class RenameFilesController extends HttpServlet {
 		
 		String fileRename = request.getParameter("fileRename");
 		String userName ="cs3220stu78";
-		String password ="fRINU1iD";
+		String password ="HhEABpU*";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
 		if(fileRename==null || fileRename.trim().length() ==0) {
