@@ -72,8 +72,9 @@ public class RenameFilesController extends HttpServlet {
 		String password ="HhEABpU*";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
-		if(fullFile==null || fullFile.trim().length() ==0) {
-			request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
+		if(fileRename==null || fileRename.trim().length() ==0) {
+			System.out.println("error works");
+			request.getSession().setAttribute("error", "File Name Invalid. Try again.");
 			response.sendRedirect("home");
 			return;
 			
@@ -108,7 +109,7 @@ public class RenameFilesController extends HttpServlet {
 				
 			}
 			else {
-				request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
+				request.getSession().setAttribute("error", "File Name Invalid. Try again.");
 			}
 			
 			

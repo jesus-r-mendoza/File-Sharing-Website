@@ -32,6 +32,11 @@
 			</form>
 		</div>
 		
+		<div>
+		<c:if test="${ not empty error}">
+			<p>${error}</p>
+		</c:if>
+	</div>
 		
 		<c:forEach items="${files}" var="f">
 			<hr>

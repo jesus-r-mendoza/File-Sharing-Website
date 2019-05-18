@@ -69,7 +69,7 @@ public class FileDeleteController extends HttpServlet {
 				
 			}
 			else {
-				request.setAttribute("FileDeleteErrorMessage", "File could not be deleted. Try again.");
+				request.getSession().setAttribute("error", "File could not be deleted. Try again.");
 			}
 			pstmt.executeUpdate();
 			response.sendRedirect("home");
