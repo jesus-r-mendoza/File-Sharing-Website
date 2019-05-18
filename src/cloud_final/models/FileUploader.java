@@ -21,8 +21,7 @@ public class FileUploader {
 		uploadDir = dir;
 	}
 	
-	public int parseRequest(HttpServletRequest request) {
-		int count = 0;		
+	public String parseRequest(HttpServletRequest request) {	
 		try {			
 			List<FileItem> items = upload.parseRequest(request);
 			for ( FileItem item : items ) {
@@ -30,11 +29,11 @@ public class FileUploader {
 					String fileName = (new File( item.getName() )).getName();
 					File file = new File( uploadDir, fileName );
 					item.write(file);
-					count++;
+					return fileName;
 				}
 			}			
-		} catch ( Exception e ) {  return -1;  }
-		return count;
+		} catch ( Exception e ) {  return null;  }
+		return null;
 	}
 	
 }
