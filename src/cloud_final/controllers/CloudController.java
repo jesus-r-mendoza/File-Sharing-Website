@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import cloud_final.models.FileBean;
 import cloud_final.models.User;
 
-@WebServlet("/CloudController")
+@WebServlet("/home")
 public class CloudController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -31,7 +31,7 @@ public class CloudController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User user = (User) request.getSession().getAttribute("user");
 		if ( user == null )
-			response.sendRedirect("LoginController");
+			response.sendRedirect("login");
 		else {
 			ServletContext sc = request.getServletContext();
 			String path = sc.getRealPath("/WEB-INF/uploads");

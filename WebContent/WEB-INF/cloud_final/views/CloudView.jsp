@@ -21,7 +21,7 @@
 		
 		<div class="d-flex justify-content-between">
 			<h3>These are your stored files:</h3>
-			<a href="LoginController">Sign Out</a>
+			<a href="login">Sign Out</a>
 		</div>
 		
 		<div>
@@ -38,8 +38,8 @@
 			<div class="d-flex justify-content-between">
 				<h5>${f.file.name}</h5>
 				<div class="d-flex justify-content-around">
-					<a class="mr-1" href="RenameFilesController?userId=${user.user_id}&fileId=${f.id}">Rename</a>
-					<a class="ml-1" href="FileDeleteController?fileId=${f.id}">Delete</a>
+					<a class="mr-1" href="renamefiles?userId=${user.user_id}&fileId=${f.id}">Rename</a>
+					<a class="ml-1" href="delete?fileId=${f.id}">Delete</a>
 				</div>
 			</div>
 			

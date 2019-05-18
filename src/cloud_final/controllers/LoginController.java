@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.security.MessageDigest;
 
-@WebServlet("/LoginController")
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -106,10 +106,10 @@ public class LoginController extends HttpServlet {
 		   		user_id = rs.getInt("user_id");   
 		   		User user = new User(user_id,loginName);
 	    		request.getSession().setAttribute("user", user);
-	    		response.sendRedirect("CloudController");
+	    		response.sendRedirect("home");
 
 	    		return;
-	    		// request.getRequestDispatcher("CloudController").forward(request, response);
+	    		// request.getRequestDispatcher("home").forward(request, response);
    		 	}
     		else
     		{

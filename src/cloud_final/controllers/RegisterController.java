@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.security.MessageDigest;
 
-@WebServlet("/RegisterController")
+@WebServlet("/register")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -102,9 +102,9 @@ public class RegisterController extends HttpServlet {
     			request.getSession().setAttribute("loginName", registerName);
     			// request.getSession().setAttribute("loginPassword", registerPassword);
     			request.getSession().setAttribute("registered", "yes");
-    			response.sendRedirect("LoginController");
+    			response.sendRedirect("login");
     			return;
-    			// request.getRequestDispatcher("LoginController").forward(request, response);	
+    			// request.getRequestDispatcher("login").forward(request, response);	
     		}    
         }
         catch( SQLException e )
