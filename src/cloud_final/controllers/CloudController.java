@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +33,9 @@ public class CloudController extends HttpServlet {
 		if ( user == null )
 			response.sendRedirect("LoginController");
 		else {
-			ArrayList<FileBean> files = getFilesFromDB(user, this.getServletContext().getRealPath("/WEB-INF/uploads"));
+			ServletContext sc = request.getServletContext();
+			String path = sc.getRealPath("/WEB-INF/uploads");
+			ArrayList<FileBean> files = getFilesFromDB(user, path);
 			request.getSession().setAttribute("files", files);
 			request.getRequestDispatcher("/WEB-INF/cloud_final/views/CloudView.jsp").forward(request, response);
 		}
@@ -46,9 +49,9 @@ public class CloudController extends HttpServlet {
 		ArrayList<FileBean> files = new ArrayList<>();
 		Connection c = null;
 		try {
-			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu90";
-			String username = "cs3220stu90";
-			String password = "fRINU1iD";
+			String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78";
+			String username = "cs3220stu78";
+			String password = "HhEABpU*";
 			c = DriverManager.getConnection(url, username, password);
 			
 			String sql = "select * from files where user_id = ?";
@@ -61,7 +64,7 @@ public class CloudController extends HttpServlet {
 			while (rs.next()) {
 				int fileId = rs.getInt("file_id");
 				String fileName = rs.getString("file_name");
-				File file = new File(path + fileName);
+				File file = new File(path, fileName);
 				FileBean bean = new FileBean(fileId, file, path);
 				files.add(bean);
 			}
