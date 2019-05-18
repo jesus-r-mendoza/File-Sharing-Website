@@ -19,7 +19,7 @@ import cloud_final.models.User;
 /**
  * Servlet implementation class FileDeleteController
  */
-@WebServlet("/FileDeleteController")
+@WebServlet("/delete")
 public class FileDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -69,10 +69,10 @@ public class FileDeleteController extends HttpServlet {
 				
 			}
 			else {
-				request.setAttribute("FileDeleteErrorMessage", "File could not be deleted. Try again.");
+				request.getSession().setAttribute("error", "File could not be deleted. Try again.");
 			}
 			pstmt.executeUpdate();
-			response.sendRedirect("CloudController");
+			response.sendRedirect("home");
 			return;
 //			fb.getFile().renameTo(new File(fb.getPath() + fileRename));
 //			

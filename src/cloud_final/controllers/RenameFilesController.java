@@ -19,7 +19,7 @@ import cloud_final.models.FileBean;
 
 
 
-@WebServlet("/RenameFilesController")
+@WebServlet("/renamefiles")
 public class RenameFilesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,7 +32,7 @@ public class RenameFilesController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		getExt("test.jpg");
-
+		
 		System.out.print("Entered do get");
 		Integer fileId = Integer.valueOf( request.getParameter( "fileId" ) );
 		Integer userId = Integer.valueOf( request.getParameter( "userId" ) );
@@ -72,9 +72,10 @@ public class RenameFilesController extends HttpServlet {
 		String password ="HhEABpU*";
 		String url = "jdbc:mysql://cs3.calstatela.edu/cs3220stu78" ;
 		
-		if(fullFile==null || fullFile.trim().length() ==0) {
-			request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
-			response.sendRedirect("CloudController");
+		if(fileRename==null || fileRename.trim().length() ==0) {
+			System.out.println("error works");
+			request.getSession().setAttribute("error", "File Name Invalid. Try again.");
+			response.sendRedirect("home");
 			return;
 			
 		}
@@ -108,7 +109,7 @@ public class RenameFilesController extends HttpServlet {
 				
 			}
 			else {
-				request.setAttribute("FileRenameErrorMessage", "File Name Invalid. Try again.");
+				request.getSession().setAttribute("error", "File Name Invalid. Try again.");
 			}
 			
 			
@@ -119,7 +120,7 @@ public class RenameFilesController extends HttpServlet {
 			e.printStackTrace();
 		}
 				
-		response.sendRedirect("CloudController");
+		response.sendRedirect("home");
 		
 		
 		

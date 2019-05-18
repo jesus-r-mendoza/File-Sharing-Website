@@ -14,8 +14,14 @@
 </style>
 </head>
 <body>
+	<div class="jumbotron">
+			<h1 class="display-3">Welcome to your Cloud</h1>
+		</div>
+		<div class="d-flex justify-content-between">
+	</div>
+	
 	<div class="container">
-		<form action="RegisterController" method="post">
+		<form action="register" method="post">
 			username: <input type="text" name="registerName"><br>
 			password: <input type="password" name="registerPassword"><br>
 			<input type="submit" name="register" value="register">
