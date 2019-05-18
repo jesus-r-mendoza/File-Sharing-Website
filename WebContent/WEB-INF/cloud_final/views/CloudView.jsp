@@ -33,6 +33,12 @@
 		</div>
 		
 		
+		<c:forEach items="${files} var="f">
+			<h5>${f.file.name}</h5>
+			<h5>${f.path}</h5>
+			<h5>${f.id}</h5>
+			<hr>
+		</c:forEach>
 		
 	</div>
 
